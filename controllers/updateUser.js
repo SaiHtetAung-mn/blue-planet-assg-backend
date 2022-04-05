@@ -10,6 +10,11 @@ async function updateUser(req, res, next) {
             let age = req.body.age ?? null;
             let city = req.body.city ?? null;
             let address = req.body.address ?? null;
+
+            if(age && !Number.isInteger(age)) {
+                throw new BaseError(400, true, 'Incorrect parameter passed');
+            }
+
             if(name || phone || age || city || address) {
                 let is_updated = await User.updateUserById(req.params.id, name, phone, age, city, address);
                 if(is_updated) {

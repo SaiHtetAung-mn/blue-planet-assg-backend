@@ -2,7 +2,7 @@ const { query } = require('express');
 const db_connection = require('./Database');
 
 const USER_PROPS = {
-    table: 'user',
+    table: 'User',
     col_id: 'id',
     col_name: 'name',
     col_phone: 'phone',
@@ -13,6 +13,9 @@ const USER_PROPS = {
 
 function checkUserProps(user) {
     if(!user instanceof Object) {
+        return false;
+    }
+    else if(!Number.isInteger(user.age)) {
         return false;
     }
     else {
@@ -96,7 +99,7 @@ function updateUserById(_id, _name, _phone, _age, _city, _address) {
 
         let query = `update ${USER_PROPS['table']} set ${name}${phone}${age}${city}${address}`;
         query = query.trim();
-        query = query.substring(0, query.length-1);
+        query = query.substring(0, query.length-1); //delete last comma
         query += ` where ${USER_PROPS['col_id']}="${_id}"`;
 
         db_connection.query(query, (err) => {

@@ -15,7 +15,7 @@ connection.connect(err => {
         throw err;
     }
     else {
-        const init_query = `create table if not exists user(
+        const init_query = `create table if not exists User(
             id varchar(50),
             name varchar(50),
             phone varchar(30),
@@ -26,7 +26,6 @@ connection.connect(err => {
         connection.query(init_query, err => {
             if(err) {
                 throw err;
-                console.log(err);
             }
             else {
                 console.log(`User table created successfully`);
