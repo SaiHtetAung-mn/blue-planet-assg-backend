@@ -15,7 +15,7 @@ function checkUserProps(user) {
     if(!user instanceof Object) {
         return false;
     }
-    else if(!Number.isInteger(user.age)) {
+    else if(!Number.isInteger(Number(user.age))) {
         return false;
     }
     else {
@@ -77,7 +77,7 @@ function insertNewUser(name, phone, age, city, address) {
     return new Promise((resolve, reject) => {
         const new_id = Date.now().toString();
         const query = `insert into ${USER_PROPS['table']} values("${new_id}", "${name}",
-         "${phone}", "${age}", "${city}", "${address}")`;
+         "${phone}", ${age}, "${city}", "${address}")`;
         db_connection.query(query, err => {
             if(err) {
                 reject(err);
@@ -93,7 +93,7 @@ function updateUserById(_id, _name, _phone, _age, _city, _address) {
     return new Promise((resolve, reject) => {
         let name = _name == null ? '' : `${USER_PROPS['col_name']}="${_name}",`;
         let phone = _phone == null ? '' : `${USER_PROPS['col_phone']}="${_phone}",`;
-        let age = _age == null ? '' : `${USER_PROPS['col_age']}="${_age}",`;
+        let age = _age == null ? '' : `${USER_PROPS['col_age']}=${_age},`;
         let city = _city == null ? '' : `${USER_PROPS['col_city']}="${_city}",`;
         let address = _address == null ? '' : `${USER_PROPS['col_address']}="${_address}",`;
 

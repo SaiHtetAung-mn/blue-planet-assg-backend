@@ -11,7 +11,7 @@ async function updateUser(req, res, next) {
             let city = req.body.city ?? null;
             let address = req.body.address ?? null;
 
-            if(age && !Number.isInteger(age)) {
+            if(age && !Number.isInteger(Number(age))) {
                 throw new BaseError(400, true, 'Incorrect parameter passed');
             }
 
